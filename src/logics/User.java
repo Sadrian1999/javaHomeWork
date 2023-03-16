@@ -10,8 +10,11 @@ public class User {
     private String position;
     private String applicationType;
     
-    public User(int age, int wage, int jobTime, boolean isVem, boolean isTaxFree, String name, String position,
-            String applicationType) {
+    public User(){
+        
+    }
+    
+    public User(int age, int wage, int jobTime, boolean isVem, boolean isTaxFree, String name, String position, String applicationType) {
         this.age = age;
         this.wage = wage;
         this.jobTime = jobTime;

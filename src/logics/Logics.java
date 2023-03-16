@@ -1,19 +1,30 @@
 package logics;
 
 public class Logics {
-    private User user;
-
-    public Logics(User user) {
-        this.user = user;
+    
+    private boolean isVem;
+    private int age;
+    
+    public Logics(boolean isVem, int age) {
+        this.isVem = isVem;
+        this.age = age;
     }
+    
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public void setVem(boolean isVem) {
+        this.isVem = isVem;
+    }
+
     public double breakTime(double workedHours){
 
-        if (user.isVem()) {
+        if (isVem) {
             if (workedHours > 9 + (double)1/3) { return 1;}
             if (workedHours <= 6) { return 0; }
             else { return 0.5; }
         }
-        else if (user.getAge() >= 18) {
+        else if (age >= 18) {
             if (workedHours > 6 && workedHours <= 9 + (double)1/3) { return (double)1 / 3; }
             if (workedHours > 9 + (double)1/3 && workedHours <= 12.75) { return 0.75; }
             else{ return 0; }
@@ -24,6 +35,7 @@ public class Logics {
             else { return 0; }
         }
     }
+    
     public Hours countingHours(Clocking clocking, boolean isDoubleMoney){
         Hours hours = new Hours();
         double in = clocking.getIn();
@@ -40,21 +52,30 @@ public class Logics {
                 hundred += workedHours - breakTime(workedHours);
             }
 
+            if (in >= 0 && out <= 6) {
+                fourty += workedHours * doubleMoney;
+            }
+            if (in > 22 && out < 24) {
+                fourty += workedHours * doubleMoney;
+            }
+            if (in >= 18 && out < 22) {
+                thirty += workedHours * doubleMoney;
+            }
             if (in > 0 && in < 6 && out <= 18 && out > 6) {
                 fourty += (6 - in) * doubleMoney;
             }
             else if (in > 6 && out <= 22 && out > 18) {
                 thirty += (out - 18 ) * doubleMoney;
             }
-            else if (in > 18 && out <= 24 && out > 22) {
+            else if (in > 18 && out < 24 && out > 22) {
                 fourty += (24 - out) * doubleMoney;
                 thirty += (22 - in - breakTime(workedHours)) * doubleMoney;
             }
-            else if (in > 0 && in <= 6 && out < 22 && out >= 18) {
+            else if (in >= 0 && in <= 6 && out < 22 && out >= 18) {
                 fourty += (24 - out) * doubleMoney;
                 thirty += (out - 18) * doubleMoney;
             }
-            else if (in > 6  && in <= 18 && out <= 24 && out > 22){
+            else if (in > 6  && in <= 18 && out < 24 && out > 22){
                 fourty += (out - 22) * doubleMoney;
                 thirty += 4 * doubleMoney;
             }
@@ -88,11 +109,5 @@ public class Logics {
         hours.setHundredPercent(hundred);
         return hours;
         
-    }
-
-    public static void main(String[] args) {
-        User u = new User(23, 2260, 8, false, true, "Adrian", "Koordinator", "Full time");
-        Logics l = new Logics(u);
-        System.out.println(l.countingHours(new Clocking("12:00", "23:45"), false));
     }
 }

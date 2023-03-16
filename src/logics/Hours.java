@@ -38,8 +38,9 @@ public class Hours {
     }
     
     public String toString() {
-        return "Base: " + baseHours + "\n30%: " + thirtyPercent + "\n40%: " + fourtyPercent + "\n100%: " + hundredPercent;
+        return "Base:\t" + baseHours + "\n30%:\t" + thirtyPercent + "\n40%:\t" + fourtyPercent + "\n100%:\t" + hundredPercent;
     }
+    
     public Hours add(Hours hoursToAdd){
         double newBase = this.baseHours + hoursToAdd.baseHours;
         double newThirty = this.thirtyPercent + hoursToAdd.thirtyPercent;
