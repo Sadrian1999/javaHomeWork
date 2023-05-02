@@ -1,3 +1,20 @@
+//********************************************************************************************
+//*                                     USER CLASS                                           *
+//********************************************************************************************
+
+/**
+ * This class represents a user, having the following parameters:
+ * @param age               is the age of the employee
+ * @param wage              is the amount of gross money per hour
+ * @param jobTime           is the time an employee works a normal day, like 4 - 6 - 8 hours for 5 days a week
+ * @param isVem             is needed if the employee is a Guest Experience Manager, because they have different breaktime then others      
+ * @param isTaxFree         is need if an emloyee doesn't need to pay any taxes
+ * @param name              is the name of the worker
+ * @param position          is the position in the company, this program works with: Normal employee - Trainer - Coordinator - Guest Experience Manager
+ * @param applicationType   is needed to find out whether someone is a student or a normal worker
+ * 
+ * 
+ */
 package logics;
 
 public class User {

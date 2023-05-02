@@ -1,3 +1,17 @@
+//********************************************************************************************
+//*                                     HOUR CLASS                                           *
+//********************************************************************************************
+
+/**
+ * This class's purpose to separate the different bonuses, and help summing them
+ * 
+ * @param   basehours -> 0% bonus
+ * @param   thirtyPercent -> 30% bonus
+ * @param   fourtyPercent -> 40% bonus
+ * @param   hundredPercent -> 100% bonus
+ * 
+ * These gets multiplied by the wage.
+ */
 package logics;
 
 public class Hours {

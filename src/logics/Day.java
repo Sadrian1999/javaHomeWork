@@ -1,3 +1,29 @@
+//********************************************************************************************
+//*                                     DAY CLASS                                            *
+//********************************************************************************************
+
+/**
+ * This class represents an actual day.
+ * A day can consists of maximum 2 blockings, if the employee worked night shifts one after another.
+ * Like this it can happen that they have working hours after midnight to like 6 am, and they clock
+ * in again at 10 pm.
+ *
+ * @input a clocking, and whether if its a double money day or not.
+ * The main purpose of this class is to separate the working hours into different sections,
+ * since there are bonuses depending on what time you are working troughout the day.
+ * 
+ * @example Clocking 12:00 - 22:00  (Age > 18, basic employee)
+ *          I.   -> adding to clockings
+ *          II.  -> passing to the logics module
+ *                  to get the hours
+ *          II.  -> hours store for this clocking:
+ *                  base:   9.25
+ *                  30%:    4
+ *                  40%:    0
+ *                  100%:   0
+ *          This information will be used to calculate the salary.
+ */
+
 package logics;
 
 import java.util.ArrayList;
@@ -6,12 +32,10 @@ public class Day {
     private ArrayList<Clocking> clockings = new ArrayList<Clocking>();
     private Hours hours = new Hours();
     private boolean isDoubleMoney;
-    private boolean subtractBreak;
 
     public Day(Clocking clocking, boolean isDoubleMoney) {
         this.clockings.add(clocking);
         this.isDoubleMoney = isDoubleMoney;
-        this.subtractBreak = subtractBreak;
     }
 
     public void addClockings(Clocking clocking) {
@@ -48,15 +72,7 @@ public class Day {
         if (clockings.size() == 1) {
             return "In:\t" + clockings.get(0).getOriginalIn() + "\nOut:\t" + clockings.get(0).getOriginalOut()+ "\n" ;
         }
-        else {
-            return "1rst\nIn:\t" + clockings.get(0).getOriginalIn() + "\nOut:\t" + clockings.get(0).getOriginalOut() + "\n" +
-            "\n2nd\nIn:\t" + clockings.get(1).getOriginalIn() + "\nOut:\t" + clockings.get(1).getOriginalOut();
-        }
-    }
-    public static void main(String[] args) {
-        Day day = new Day(new Clocking("13:40", "22:00"), false);
-        System.out.println(day.getHours());
-
-    }
-    
+        return "1rst\nIn:\t" + clockings.get(0).getOriginalIn() + "\nOut:\t" + clockings.get(0).getOriginalOut() + "\n" +
+                "\n2nd\nIn:\t" + clockings.get(1).getOriginalIn() + "\nOut:\t" + clockings.get(1).getOriginalOut();
+    } 
 }

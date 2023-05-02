@@ -1,3 +1,29 @@
+//********************************************************************************************
+//*                                     ENGINE                                               *
+//********************************************************************************************
+
+/**
+ * This class is the centre of the software, gets the datas and passes it to the calculate unit,
+ * reads files, writes them,
+ * 
+ * @section Day:
+ *      The days are stored in a hasmap, the key is the date, the value is the corresponding day
+ *      @function isDayAdded 
+ *      @param date the date searched
+ *      @return true if the day is in the hashmap already, else false
+ * 
+ *      @function addDay
+ *      @param day the day to add
+ *      @param date is the date to add the day to
+ *      It checks if a day is added already or not, if not, adds a new day, else it appends to an existing one
+ *      Also it checks if its a night shift or not, if so it creates or appends the other half to the next day,
+ *      since someone working the night shift works effective 2 days in one shift. Separation needed to be precise
+ *      with the double money days for example.
+ * 
+ *      @function counthoursForDay
+ *      It goes through the hashmap and summs all the bonuses, and saves it to the money variable.
+ *      
+ */
 package engine;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -22,10 +48,12 @@ public class Engine {
     }
 
     public void addDay(Day day, LocalDate date){
+
         double in = day.getClockings().get(0).getIn();
         double out = day.getClockings().get(0).getOut();
         String originalIn = day.getClockings().get(0).getOriginalIn();
         String originalOut = day.getClockings().get(0).getOriginalOut();
+
         if (in < out && !isDayAdded(date)) {
             days.put(date, day);
         }
@@ -62,7 +90,7 @@ public class Engine {
     
     public static void main(String[] args) {
         Engine e = new Engine();
-        e.addDay(new Day(new Clocking("18:00", "22:00"), false), LocalDate.of(2023, 3, 16));
+        e.addDay(new Day(new Clocking("18:00", "4:00"), false), LocalDate.of(2023, 3, 16));
         e.countHoursForDay();
         e.printMoney();
     }

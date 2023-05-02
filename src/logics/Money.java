@@ -1,3 +1,23 @@
+//********************************************************************************************
+//*                                     MONEY CLASS                                          *
+//********************************************************************************************
+
+/**
+ * This class calculates the salary of given parameters in the other logics classes, 
+ * @param base      base hours from clocking
+ * @param thirty    is the 30% bonus
+ * @param fourty    is the 40% bonus
+ * @param hundred   is the 100% bonus
+ * @param sick      is the hours of being sick
+ * @param paidOff   is the hours being on holiday
+ * @param overTime  is the hours working more in a month then the montly frame
+ * @param nett      is the nett salary
+ * @param gross     is the gross salary
+ * 
+ * @function calculate takes the users data, and calculate their salary
+ *              
+ */
+
 package logics;
 
 public class Money{
@@ -94,14 +114,6 @@ public class Money{
         }
         nett = gross - tbMoney - taxMoney;
         System.out.println(nett);
-    }
-    public static void main(String[] args) {
-        Money m = new Money();
-        User u = new User();
-        u.setWage(2260);
-        u.setAge(27);
-        m.setBase(10);
-        m.calculate(u);
     }
 }
 

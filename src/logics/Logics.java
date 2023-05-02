@@ -1,3 +1,24 @@
+//********************************************************************************************
+//*                                     LOGICS CLASS                                         *
+//********************************************************************************************
+
+/**
+ * This class is responsible for calculating the employee's worked hours. It requires some informations
+ * about the worker to get the correct results.
+ * 
+ * @param isVem is needed if the employee is a Guest Experience Manager, because they have different
+ *              breaktime then others
+ * @param age is needed to calculate how many hours an underage can work, and how much breaktime they 
+ *              has
+ * 
+ * @function breakTime calculates how much breaktime a worker has. It depends on the employees age,
+ *              position and the time they worked.
+ *       
+ * @function countingHours calculates how much time was spent in which bonus hours, and @return a Hours
+ *              type, storing the calculated values
+ */
+
+
 package logics;
 
 public class Logics {
@@ -27,7 +48,7 @@ public class Logics {
         else if (age >= 18) {
             if (workedHours > 6 && workedHours <= 9 + (double)1/3) { return (double)1 / 3; }
             if (workedHours > 9 + (double)1/3 && workedHours <= 12.75) { return 0.75; }
-            else{ return 0; }
+            else { return 0; }
         }
         else {
             if (workedHours > 4.5 && workedHours <= 6) { return 0.5; }
