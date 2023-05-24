@@ -31,10 +31,15 @@ import java.util.Iterator;
 import logics.*;
 
 public class Engine {
+    
     private HashMap<LocalDate, Day> days = new HashMap<>();
-    private Logics logics = new Logics(false, 23);
-    private User user = new User();
     private Money money = new Money();
+    
+    public Money getMoney() {
+        return money;
+    }
+
+    private Logics logics = new Logics(money.getUser().isVem(), money.getUser().getAge());
 
     public HashMap<LocalDate, Day> getDays() {
         return days;
@@ -84,14 +89,51 @@ public class Engine {
             it.remove();
         }
     }
+    
     public void printMoney() {
         System.out.println(money.getBase() + "\n" + money.getThirty() + "\n" + money.getFourty() + "\n" + money.getHundred());
     }
-    
-    public static void main(String[] args) {
-        Engine e = new Engine();
-        e.addDay(new Day(new Clocking("18:00", "4:00"), false), LocalDate.of(2023, 3, 16));
-        e.countHoursForDay();
-        e.printMoney();
+
+    public void setPaidOff(int paidOff){
+        money.setPaidOff(paidOff);
+    }
+    public void setSick(int sick){
+        money.setSick(sick);
+    }
+    public double getThirty(){
+        return money.getThirty();
+    }
+    public double getFourty(){
+        return money.getFourty();
+    }
+    public double getHundred(){
+        return money.getHundred();
+    }
+    public double getBase(){
+        return money.getBase();
+    }
+    public double getPaidOff(){
+        return money.getPaidOff();
+    }
+    public double getSick(){
+        return money.getSick();
+    }
+    public double getBaseMoney() {
+        return money.getBaseMoney();
+    }
+    public double getThirtyMoney() {
+        return money.getThirtyMoney();
+    }
+    public double getFourtyMoney() {
+        return money.getFourtyMoney();
+    }
+    public double getHundredMoney() {
+        return money.getHundredMoney();
+    }
+    public double getSickMoney() {
+        return money.getSickMoney();
+    }
+    public double getPaidOffMoney() {
+        return money.getPaidOffMoney();
     }
 }

@@ -17,7 +17,9 @@
  */
 package logics;
 
-public class User {
+import java.io.*;
+
+public class User implements Serializable{
     private int age;
     private int wage;
     private int jobTime;
@@ -26,8 +28,25 @@ public class User {
     private String name;
     private String position;
     private String applicationType;
+    private String profilePicturePath = "assets/default_profile.png";
     
+    public String getProfilePicturePath() {
+        return profilePicturePath;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath;
+    }
+
     public User(){
+        this.age = 23;
+        this.wage = 1000;
+        this.jobTime = 8;
+        this.isVem = false;
+        this.isTaxFree = true;
+        this.name = "Adrián";
+        this.position = "Koordinátor";
+        this.applicationType = "Állandós";
         
     }
     
@@ -89,5 +108,36 @@ public class User {
     }
     public void setApplicationType(String applicationType) {
         this.applicationType = applicationType;
+    }
+
+    @Override
+    public String toString() {
+        return "User [age=" + age + ", wage=" + wage + ", jobTime=" + jobTime + ", isVem=" + isVem + ", isTaxFree="
+                + isTaxFree + ", name=" + name + ", position=" + position + ", applicationType=" + applicationType
+                + "]";
+    }
+
+    public void write(){
+        try {
+            FileOutputStream f = new FileOutputStream("user.ser");
+            ObjectOutputStream out = new ObjectOutputStream(f);
+            out.writeObject(this);
+            out.close();
+        } catch (IOException exception) {
+            System.err.println("Sikertelen írás");
+        }
+    }
+    public static User read(){
+        User redUser;
+        try {
+            FileInputStream f = new FileInputStream("user.ser");
+            ObjectInputStream obj = new ObjectInputStream(f);
+            redUser = (User)obj.readObject();
+            obj.close();
+            return redUser;
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
