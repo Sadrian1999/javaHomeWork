@@ -10,13 +10,13 @@ public class Column extends JPanel{
 
     public Column(){
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBounds(0, 0, 100, MAIN_HEIGHT);
+        this.setBounds(0, 0, 50, MAIN_HEIGHT);
         this.setBackground(BASE_BG_COLOR);
     }
 
     public Column(JComponent[] components, int rigidAreaHeight) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBounds(0, 0, 100, MAIN_HEIGHT);
+        this.setBounds(0, 0, 50, MAIN_HEIGHT);
         this.setBackground(BASE_BG_COLOR);
         for (JComponent jComponent : components) {
             this.add(jComponent);

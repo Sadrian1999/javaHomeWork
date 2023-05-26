@@ -3,14 +3,9 @@ import java.awt.*;
 import javax.swing.*;
 
 import engine.Engine;
-import logics.Clocking;
-import logics.Day;
-import logics.Money;
-import logics.User;
+import logics.*;
 import ui.Errors.ClockingConvertException;
-import ui.mainpanels.Column;
-import ui.mainpanels.MainContentPanel;
-import ui.mainpanels.NewCount;
+import ui.mainpanels.*;
 import ui.ownelements.Label;
 import ui.ownelements.TextField;
 import ui.ownelements.MenuItem;
@@ -21,7 +16,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -46,7 +40,6 @@ public class App extends JFrame implements MouseListener{
     private static final String SETTINGS_PATH = "assets/settings.png";
     private static final String PROFILE_PATH = "assets/profile.png";
 
-
 //********************************************************************************************
 //*                                     MAIN FRAME SECTION                                   *
 //********************************************************************************************
@@ -59,11 +52,13 @@ public class App extends JFrame implements MouseListener{
 
     private JPanel containter = new JPanel(new BorderLayout());
     private JPanel contentPanels = new JPanel(cardLayout);
-
+    
     private MainContentPanel prevCountPanel = new MainContentPanel();
     private MainContentPanel settingsPanel = new MainContentPanel();
     private MainContentPanel profilePanel = new MainContentPanel();
     private MainContentPanel reportPanel = new MainContentPanel();
+    private MainContentPanel newCountPanel = new MainContentPanel();
+    private MainContentPanel welcomePanel = new MainContentPanel();
 
 //********************************************************************************************
 //*                                     MENU SECTION                                         *
@@ -71,7 +66,7 @@ public class App extends JFrame implements MouseListener{
 /**
  * The menu consists of the sidebar, holding the different options to chose from.
  */
-     
+    
     private Menubar menu = new Menubar();
 
     private MenuItem newCount = new MenuItem(NEW_COUNT_PATH, "Új számítás");
@@ -79,8 +74,6 @@ public class App extends JFrame implements MouseListener{
     private MenuItem settings = new MenuItem(SETTINGS_PATH, "Beállítások");
     private MenuItem profile = new MenuItem(PROFILE_PATH, "Profil");
 
-    
-    
 //********************************************************************************************
 //*                                       RUNNING                                            *
 //********************************************************************************************
@@ -89,13 +82,12 @@ public class App extends JFrame implements MouseListener{
         menuSettings();
         panelSettings();
         appSettings();
-        cardLayout.show(contentPanels, "profile");
+        cardLayout.show(contentPanels, "welcome");
     }
     
 //********************************************************************************************
 //*                                     NEW COUNT                                            *
 //********************************************************************************************
-    private int FieldSize = 15;
     private Label dateMsg = new Label("", 13);
 
     private TextField dateText = new TextField();
@@ -107,8 +99,6 @@ public class App extends JFrame implements MouseListener{
 
     private Button add = new Button("Hozzáadás");
     private Button count = new Button("Számítás");
-
-    private MainContentPanel newCountPanel = new MainContentPanel();
 
 //********************************************************************************************
 //*                                     REPORT                                               *
@@ -126,7 +116,6 @@ public class App extends JFrame implements MouseListener{
     private Label hundredMoney = new Label("0 Ft");
     private Label paidOffMoney = new Label("0 Ft");
     private Label sickMoney = new Label("0 Ft");
-
     private Label totalHours = new Label("0");
     private Label brutt = new Label("0 Ft");
     private Label nett = new Label("0 Ft");
@@ -149,16 +138,15 @@ public class App extends JFrame implements MouseListener{
 //*                                     SETTINGS                                             *
 //********************************************************************************************
 
-    private int settingsTextFieldSize = 10;
-
-    private Label nameLabel = new Label("Név");
-    private Label positionlLabel = new Label("Pozíció");
-    private Label appliacationTypeLabel = new Label("Foglalkoztatás");
-    private Label ageLabel = new Label("Életkor");
-    private Label wageLabel = new Label("Órabér");
-    private Label jobTimeLabel = new Label("Foglalkoztatásidő");
-    private Label isVemlLabel = new Label("VÉM?");
-    private Label isTaxFreLabel = new Label("Adómentes?");
+    private int settingsTextSize = 22;
+    private Label nameLabel = new Label("Név", settingsTextSize);
+    private Label positionlLabel = new Label("Pozíció", settingsTextSize);
+    private Label appliacationTypeLabel = new Label("Foglalkoztatás", settingsTextSize);
+    private Label ageLabel = new Label("Életkor", settingsTextSize);
+    private Label wageLabel = new Label("Órabér", settingsTextSize);
+    private Label jobTimeLabel = new Label("Foglalkoztatásidő", settingsTextSize);
+    private Label isVemlLabel = new Label("VÉM?", settingsTextSize);
+    private Label isTaxFreLabel = new Label("Adómentes?", settingsTextSize);
 
     private TextField nameTextField = new TextField();
     private TextField posTextField = new TextField();
@@ -166,9 +154,8 @@ public class App extends JFrame implements MouseListener{
     private TextField ageTextField = new TextField();
     private TextField wagTextField = new TextField();
     private TextField jobTimetTextField = new TextField();
-    private TextField isVemtTextField = new TextField();
-    private TextField isTaxFreTextField = new TextField();
-
+    private JCheckBox isVemtCheckBox = new JCheckBox();
+    private JCheckBox isTaxFreeCheckBox = new JCheckBox();
 
     private Button save = new Button("Mentés");
 
@@ -176,7 +163,8 @@ public class App extends JFrame implements MouseListener{
 //*                                     PROFILE                                              *
 //********************************************************************************************
 
-    private JLabel profilePicture = new JLabel(new ImageIcon(new ImageIcon(engine.getMoney().getUser().getProfilePicturePath()).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
+    private JLabel profilePicture = new JLabel(new ImageIcon(
+        new ImageIcon(engine.getMoney().getUser().getProfilePicturePath()).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
     private JFileChooser fileChooser = new JFileChooser();
     private Button changeProfilePicture = new Button("Tallózás");
     private Button saveProfilePicture = new Button("Mentés");
@@ -204,6 +192,7 @@ public class App extends JFrame implements MouseListener{
         reportPanelSettings();
         prevCountPanelSettings();
         profilePanelSettings();
+        welcomePanelSettings();
         buttonActions();
 
         contentPanels.add(newCountPanel, "newCount");
@@ -211,13 +200,14 @@ public class App extends JFrame implements MouseListener{
         contentPanels.add(settingsPanel, "settings");
         contentPanels.add(profilePanel, "profile");
         contentPanels.add(reportPanel, "report");
+        contentPanels.add(welcomePanel, "welcome");
         containter.add(contentPanels, BorderLayout.CENTER);
         newCount.addMouseListener(this);
         prevCount.addMouseListener(this);
         profile.addMouseListener(this);
         settings.addMouseListener(this);
-    }
-    
+    }  
+
     private void newCountPanelSettings(){
         Label dateLabel = new Label("Dátum");
         Label clockInLabel = new Label("Be");
@@ -305,52 +295,13 @@ public class App extends JFrame implements MouseListener{
         prevCountPanel.add(firstColumn);
     }
     private void settingsPanelSettings() {
-        
-        JPanel firstColumn = new JPanel();
-        firstColumn.setLayout(new BoxLayout(firstColumn, BoxLayout.Y_AXIS));
-        firstColumn.setBounds(0, 0, 100, MAIN_HEIGHT);
-        firstColumn.setBackground(BASE_BG_COLOR);
-        firstColumn.add(nameLabel);
-        firstColumn.add(ageLabel);
-        firstColumn.add(wageLabel);
-        firstColumn.add(positionlLabel);
-        firstColumn.add(appliacationTypeLabel);
-        firstColumn.add(jobTimeLabel);
-        firstColumn.add(isTaxFreLabel);
-        firstColumn.add(isVemlLabel);
-        firstColumn.add(Box.createRigidArea(new Dimension(0, 400)));
+        Column firstColumn = new Column(new JComponent[]{
+            nameLabel, ageLabel, wageLabel, positionlLabel, appliacationTypeLabel, jobTimeLabel, isTaxFreLabel, isVemlLabel
+        }, 400);
+        Column secondColumn = new Column(new JComponent[]{
+            nameTextField, ageTextField, wagTextField, posTextField, applicationTextField, jobTimetTextField, isTaxFreeCheckBox, isVemtCheckBox, save
+        }, 400);
 
-        JPanel secondColumn = new JPanel();
-        secondColumn.setLayout(new BoxLayout(secondColumn, BoxLayout.Y_AXIS));
-        secondColumn.setBounds(100, 0, 100, MAIN_HEIGHT);
-        secondColumn.setBackground(BASE_BG_COLOR);
-        secondColumn.add(nameTextField);
-        secondColumn.add(ageTextField);
-        secondColumn.add(wagTextField);
-        secondColumn.add(posTextField);
-        secondColumn.add(applicationTextField);
-        secondColumn.add(jobTimetTextField);
-        secondColumn.add(isTaxFreTextField);
-        secondColumn.add(isVemtTextField);
-        secondColumn.add(save);
-
-        secondColumn.add(Box.createRigidArea(new Dimension(0, 400)));
-
-        save.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                int age = Integer.parseInt(ageTextField.getText());
-                int wage = Integer.parseInt(wagTextField.getText());
-                int jobTime = Integer.parseInt(jobTimetTextField.getText());
-                boolean isVem = Boolean.parseBoolean(isVemtTextField.getText());
-                boolean isTaxFree = Boolean.parseBoolean(isTaxFreTextField.getText());
-                String name = nameTextField.getText();
-                String position = posTextField.getText();
-                String applicationType = applicationTextField.getText();
-                User user = new User(age, wage, jobTime, isVem, isTaxFree, name, position, applicationType);
-                engine.getMoney().setUser(user);
-                user.write();
-            }
-        });
         settingsPanel.add(firstColumn);
         settingsPanel.add(secondColumn);
     }
@@ -371,7 +322,24 @@ public class App extends JFrame implements MouseListener{
         profilePanel.add(firstColumn);
         profilePanel.add(secondColumn);
     }
-   
+    private void welcomePanelSettings(){
+        String message = "<html>";
+        message += "<h1>Üdvözöllek a pénzszámoló programban!</h1>";
+        message += "<p>Egy pár információ a program használatához:<br></p>";
+        message += "<ul>";
+        message += "<li>Az alkalmazás csak <span style=\"color:red\">megközelítő</span> értéket ad,nem 100%!</li>";
+        message += "<li>A számításhoz szükséges a blokkolásaid pontos ismerete, illetve meg kell adni a táppénzt, szabadságot és a dupla béreket pontosan!</li>";
+        message += "<li>Mentésnél mindenképp <i>.ser</i> formátumba kell menteni! Ezután újraindítás után látható a mentett fájl!</li>";
+        message += "<li>Alapadatok változtatása után menteni kell a változtatásokat, illetve a programot ujra kell indítani!</li>";
+        message += "</ul>";
+        message += "<p><br><i>Jó használatot!</i></p>";
+        message += "</html>";
+
+        Label welcomeMessage = new Label(message);
+        welcomePanel.setLayout(new BorderLayout());
+        welcomePanel.add(welcomeMessage, BorderLayout.NORTH);
+    }
+
     private void appSettings() {
         this.setSize(BASE_SIZE);
         this.setTitle(TITLE);
@@ -387,34 +355,49 @@ public class App extends JFrame implements MouseListener{
 //*                                     ERROR HANDLING                                       *
 //********************************************************************************************
 
-    public ArrayList newCountErrors(){
-        Clocking clocking;
+    public ArrayList<Object> newCountErrors(){
         LocalDate date;
         ArrayList<Object> datas = new ArrayList<>();
-        ArrayList<String> errors = new ArrayList<>();
+        ArrayList<Object> errors = new ArrayList<>();
         String clockInString = clockInText.getText();
         String clockOutString = clockOutText.getText();
+        String sickString = sickTextField.getText();
+        String paidOffString = paidOffTextField.getText();
         String dateString = dateText.getText();
-        int inLength = clockInString.length();
-        int outLength = clockOutString.length();
 
         errors.add("ERROR");
         datas.add("DATA");
+        date = checkDate(dateString);
+        if(date != null) { datas.add(date); }
+        else errors.add("Hibás dátum");
+
+        checkClocking(clockInString, clockOutString, sickString, paidOffString, datas, errors);
+
+        if (errors.size() == 1) {
+            return datas;
+        }
+        else {
+            return errors;
+        }
+    }
+    public static LocalDate checkDate(String dateString){
         try {
-            date = LocalDate.parse(dateString);
-            datas.add(date);
+            return LocalDate.parse(dateString);
         } 
         catch (Exception e) {
-            errors.add("Hibás dátum!");
+            return null;
         }
-
+    }
+    public static void checkClocking(String clockInString, String clockOutString, String sickString, String paidOffString, ArrayList<Object> datas, ArrayList<Object> errors){
+        int inLength = clockInString.length();
+        int outLength = clockOutString.length();
         try {
             int inHour = Integer.parseInt(clockInString.substring(0, 1));
             int inMin = Integer.parseInt(clockInString.substring(3, 4));
             int outHour = Integer.parseInt(clockOutString.substring(0, 1));
             int outMin = Integer.parseInt(clockOutString.substring(3, 4));
-            int sickDays = Integer.parseInt(sickTextField.getText());
-            int paidOffDays = Integer.parseInt(paidOffTextField.getText());
+            int sickDays = Integer.parseInt(sickString);
+            int paidOffDays = Integer.parseInt(paidOffString); 
 
             if (inLength != 5 || inHour < 0 || inHour > 23 || inMin < 0 || inMin > 59 ||!clockInString.contains(":")){
                 throw new ClockingConvertException();
@@ -422,9 +405,9 @@ public class App extends JFrame implements MouseListener{
             if (outLength != 5 || outHour < 0 || outHour > 23 || outMin < 0 || outMin > 59 ||!clockOutString.contains(":")){
                 throw new ClockingConvertException();
             }
-            clocking = new Clocking(clockInString, clockOutString);
+            Clocking clocking = new Clocking(clockInString, clockOutString);
             datas.add(Double.valueOf(sickDays));
-            datas.add(Double.valueOf(paidOffDays));
+            datas.add(Double.valueOf(paidOffDays)); 
             datas.add(clockInString);
             datas.add(clockOutString);
             datas.add(clocking);
@@ -438,18 +421,11 @@ public class App extends JFrame implements MouseListener{
         catch (StringIndexOutOfBoundsException e) {
             errors.add("Sikertelen számkonvertálás!");
         }
-
-        if (errors.size() == 1) {
-            return datas;
-        }
-        else {
-            return errors;
-        }
     }
-
 //********************************************************************************************
 //*                                     EVENT SECTION                                        *
 //********************************************************************************************
+
     public void buttonActions(){
         File file = new File(System.getProperty("user.dir"));
         File[] files = file.listFiles();
@@ -535,15 +511,11 @@ public class App extends JFrame implements MouseListener{
             public void actionPerformed(ActionEvent e){
                 if (fileName.getText() == "" || !fileName.getText().endsWith(".ser")) {
                     fileName.setText("Hibás fájlnév!");
-                    try {
-                        TimeUnit.MINUTES.sleep(1);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-                    fileName.setText("");
                 }
                 else {
                     engine.getMoney().write(fileName.getText());
+                    fileName.setText("Sikeres mentés!");
+                    //todo restart app
                 }
             }
         });
@@ -559,11 +531,28 @@ public class App extends JFrame implements MouseListener{
                 }
             }
         });
+        
         saveProfilePicture.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 engine.getMoney().getUser().setProfilePicturePath(profilePicturePath);
                 engine.getMoney().getUser().write();
                 saveProfilePicture.setVisible(false);
+            }
+        });
+        
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                int age = Integer.parseInt(ageTextField.getText());
+                int wage = Integer.parseInt(wagTextField.getText());
+                int jobTime = Integer.parseInt(jobTimetTextField.getText());
+                boolean isVem = isVemtCheckBox.isSelected();
+                boolean isTaxFree = isTaxFreeCheckBox.isSelected();
+                String name = nameTextField.getText();
+                String position = posTextField.getText();
+                String applicationType = applicationTextField.getText();
+                User user = new User(age, wage, jobTime, isVem, isTaxFree, name, position, applicationType);
+                engine.getMoney().setUser(user);
+                user.write();
             }
         });
     }
@@ -587,12 +576,7 @@ public class App extends JFrame implements MouseListener{
     public void mouseReleased(MouseEvent e) { }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
-
-    public void engineWorking(){
-
-    }
     public static void main(String[] args){
         new App();
     }
-    
 }
