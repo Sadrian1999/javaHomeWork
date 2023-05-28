@@ -65,4 +65,36 @@ public class AppTest {
         
         assertEquals(hours.getBaseHours(), 11, delta);
     }
+
+    @Test
+    public void testCalculateMoney() {
+        Money money = new Money();
+        money.setUser(new User(23, 2390, 8, false, true, "Adrian", "Koordinátor", "Állandós"));
+        money.setBase(8);
+        money.setThirty(0);
+        money.setFourty(0);
+        money.setHundred(0);
+        money.setSick(0);
+        money.setPaidOff(0);
+        money.calculate();
+        assertEquals(money.getNett(), 15745.8, delta);
+        assertEquals(money.getTbMoney(), 3574.2, delta);
+    }
+
+    @Test
+    public void testConvertToDouble() {
+        double result = Clocking.convertToDouble("14:20");
+        assertEquals(result, 14.33333333333, delta);
+
+        result = Clocking.convertToDouble("6:30");
+        assertEquals(result, 6.5, delta);
+
+        result = Clocking.convertToDouble("22:45");
+        assertEquals(result, 22.75, delta);
+    }
+
+    @Test
+    public void name() {
+        
+    }
 }

@@ -39,7 +39,7 @@ public class Clocking {
         return originalOut;
     }
 
-    private double convertToDouble(String clocking){
+    public static double convertToDouble(String clocking){
         String[] time = clocking.split(":");
         int hour = Integer.parseInt(time[0]);
         double min = (double)Integer.parseInt(time[1]) / 60;

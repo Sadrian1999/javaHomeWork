@@ -327,7 +327,7 @@ public class App extends JFrame implements MouseListener{
         message += "<h1>Üdvözöllek a pénzszámoló programban!</h1>";
         message += "<p>Egy pár információ a program használatához:<br></p>";
         message += "<ul>";
-        message += "<li>Az alkalmazás csak <span style=\"color:red\">megközelítő</span> értéket ad,nem 100%!</li>";
+        message += "<li>Az alkalmazás csak <span style=\"color:red\">megközelítő</span> értéket ad, nem 100%!</li>";
         message += "<li>A számításhoz szükséges a blokkolásaid pontos ismerete, illetve meg kell adni a táppénzt, szabadságot és a dupla béreket pontosan!</li>";
         message += "<li>Mentésnél mindenképp <i>.ser</i> formátumba kell menteni! Ezután újraindítás után látható a mentett fájl!</li>";
         message += "<li>Alapadatok változtatása után menteni kell a változtatásokat, illetve a programot ujra kell indítani!</li>";
@@ -510,12 +510,11 @@ public class App extends JFrame implements MouseListener{
         confirm.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 if (fileName.getText() == "" || !fileName.getText().endsWith(".ser")) {
-                    fileName.setText("Hibás fájlnév!");
+                    fileName.setText("Hiba!");
                 }
                 else {
                     engine.getMoney().write(fileName.getText());
-                    fileName.setText("Sikeres mentés!");
-                    //todo restart app
+                    fileName.setText("Siker!");
                 }
             }
         });

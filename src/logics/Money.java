@@ -151,7 +151,7 @@ public class Money implements Serializable{
         paidOffMoney = user.getWage() * paidOff;
         overTimeMoney = user.getWage() * overTime * 0.5;
         gross = baseMoney + thirtyMoney + fourtyMoney + hundredMoney + sickMoney + paidOffMoney + overTimeMoney + 200;
-        tbMoney = gross * 0.115;
+        tbMoney = gross * 0.185;
         
         if (user.getAge() < 25) {
             if (gross > 433600) {
