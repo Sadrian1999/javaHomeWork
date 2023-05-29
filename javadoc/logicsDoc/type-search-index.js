@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"logics","l":"Clocking"},{"p":"logics","l":"Day"},{"p":"logics","l":"Hours"},{"p":"logics","l":"Logics"},{"p":"logics","l":"Money"},{"p":"logics","l":"User"}];updateSearchResults();

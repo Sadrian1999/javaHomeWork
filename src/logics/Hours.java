@@ -2,16 +2,6 @@
 //*                                     HOUR CLASS                                           *
 //********************************************************************************************
 
-/**
- * This class's purpose to separate the different bonuses, and help summing them
- * 
- * @param   basehours -> 0% bonus
- * @param   thirtyPercent -> 30% bonus
- * @param   fourtyPercent -> 40% bonus
- * @param   hundredPercent -> 100% bonus
- * 
- * These gets multiplied by the wage.
- */
 package logics;
 
 public class Hours {
@@ -20,6 +10,16 @@ public class Hours {
     private double fourtyPercent;
     private double hundredPercent;
 
+    /**
+     * This class's purpose to separate the different bonuses, and help summing them
+     * 
+     * @param   basehours -> 0% bonus
+     * @param   thirtyPercent -> 30% bonus
+     * @param   fourtyPercent -> 40% bonus
+     * @param   hundredPercent -> 100% bonus
+     * 
+     * These gets multiplied by the wage.
+     */
     public Hours(){
         this.baseHours = 0;
         this.thirtyPercent = 0;
@@ -54,7 +54,11 @@ public class Hours {
     public String toString() {
         return "Base:\t" + baseHours + "\n30%:\t" + thirtyPercent + "\n40%:\t" + fourtyPercent + "\n100%:\t" + hundredPercent;
     }
-    
+    /**
+     * Adds the new hours to the already existing ones.
+     * @param hoursToAdd the hours to add to the already existing ones.
+     * @return a new Hour object
+     */
     public Hours add(Hours hoursToAdd){
         double newBase = this.baseHours + hoursToAdd.baseHours;
         double newThirty = this.thirtyPercent + hoursToAdd.thirtyPercent;

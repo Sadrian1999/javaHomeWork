@@ -5,6 +5,9 @@ import javax.swing.JTextField;
 
 public class TextField extends JTextField{
     private static final String FONT_NAME = "Vonique 64";
+    /**
+     * My own customised JTextField.
+     */
     public TextField() {
         super(15);
         this.setMaximumSize(this.getPreferredSize());

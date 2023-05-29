@@ -2,23 +2,6 @@
 //*                                     LOGICS CLASS                                         *
 //********************************************************************************************
 
-/**
- * This class is responsible for calculating the employee's worked hours. It requires some informations
- * about the worker to get the correct results.
- * 
- * @param isVem is needed if the employee is a Guest Experience Manager, because they have different
- *              breaktime then others
- * @param age is needed to calculate how many hours an underage can work, and how much breaktime they 
- *              has
- * 
- * @function breakTime calculates how much breaktime a worker has. It depends on the employees age,
- *              position and the time they worked.
- *       
- * @function countingHours calculates how much time was spent in which bonus hours, and @return a Hours
- *              type, storing the calculated values
- */
-
-
 package logics;
 
 public class Logics {
@@ -26,6 +9,16 @@ public class Logics {
     private boolean isVem;
     private int age;
     
+    /**
+     * This class is responsible for calculating the employee's worked hours. It requires some informations
+     * about the worker to get the correct results.
+     * 
+     * @param isVem is needed if the employee is a Guest Experience Manager, because they have different
+     *              breaktime then others
+     * @param age is needed to calculate how many hours an underage can work, and how much breaktime they 
+     *              has
+     * 
+     */
     public Logics(boolean isVem, int age) {
         this.isVem = isVem;
         this.age = age;
@@ -37,7 +30,13 @@ public class Logics {
     public void setVem(boolean isVem) {
         this.isVem = isVem;
     }
-
+    /**
+     * BreakTime calculates how much breaktime a worker has. It depends on the employees age,
+     * position and the time they worked.
+     *       
+     * @param workedHours the worked hours
+     * @return a new Hour object with the calculated hours.
+     */
     public double breakTime(double workedHours){
 
         if (isVem) {
@@ -56,7 +55,13 @@ public class Logics {
             else { return 0; }
         }
     }
-    
+    /**
+     * CountingHours calculates how much time was spent in which bonus hours.
+     * 
+     * @param clocking is the clocking
+     * @param isDoubleMoney if the day has 100% bonus
+     * @return a Hours type, storing the calculated values
+     */
     public Hours countingHours(Clocking clocking, boolean isDoubleMoney){
         Hours hours = new Hours();
         double in = clocking.getIn();

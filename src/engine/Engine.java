@@ -2,28 +2,6 @@
 //*                                     ENGINE                                               *
 //********************************************************************************************
 
-/**
- * This class is the centre of the software, gets the datas and passes it to the calculate unit,
- * reads files, writes them,
- * 
- * @section Day:
- *      The days are stored in a hasmap, the key is the date, the value is the corresponding day
- *      @function isDayAdded 
- *      @param date the date searched
- *      @return true if the day is in the hashmap already, else false
- * 
- *      @function addDay
- *      @param day the day to add
- *      @param date is the date to add the day to
- *      It checks if a day is added already or not, if not, adds a new day, else it appends to an existing one
- *      Also it checks if its a night shift or not, if so it creates or appends the other half to the next day,
- *      since someone working the night shift works effective 2 days in one shift. Separation needed to be precise
- *      with the double money days for example.
- * 
- *      @function counthoursForDay
- *      It goes through the hashmap and summs all the bonuses, and saves it to the money variable.
- *      
- */
 package engine;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -35,31 +13,41 @@ public class Engine {
     
     private HashMap<LocalDate, Day> days = new HashMap<>();
     private Money money = new Money();
-    
-    public Money getMoney() {
-        return money;
-    }
-
     private Logics logics = new Logics(money.getUser().isVem(), money.getUser().getAge());
+    
+    /**
+     * This class is the centre of the software, gets the datas and passes it to the calculate unit.  
+     */
+    public Engine() {
+    }
 
     public HashMap<LocalDate, Day> getDays() {
         return days;
     }
-    
+    /**
+     * Checks if a day is added or not.
+     * @param date the given date
+     * @return true if added, otherwise false
+     */
     public boolean isDayAdded(LocalDate date){
         if (days.containsKey(date)) {
             return true;
         }
         return false;
     }
-
+    /**
+     * Adds a day to the data structure. If a day is already in and it extends midnight, it gets split into two days.
+     * Important for counting the double money.
+     * @param day the given workday != date
+     * @param date the starting date of the workday
+     */
     public void addDay(Day day, LocalDate date){
-
+        
         double in = day.getClockings().get(0).getIn();
         double out = day.getClockings().get(0).getOut();
         String originalIn = day.getClockings().get(0).getOriginalIn();
         String originalOut = day.getClockings().get(0).getOriginalOut();
-
+        
         if (in < out && !isDayAdded(date)) {
             days.put(date, day);
         }
@@ -77,7 +65,9 @@ public class Engine {
             days.put(newDate, new Day(new Clocking("00:00", originalOut), false));
         }
     }
-
+    /**
+     *Counting the hours for the day.
+     */
     public void countHoursForDay() {
         Iterator it = days.entrySet().iterator();
         while (it.hasNext()) {
@@ -94,7 +84,10 @@ public class Engine {
     public void printMoney() {
         System.out.println(money.getBase() + "\n" + money.getThirty() + "\n" + money.getFourty() + "\n" + money.getHundred());
     }
-
+    
+    public Money getMoney() {
+        return money;
+    }
     public void setPaidOff(int paidOff){
         money.setPaidOff(paidOff);
     }

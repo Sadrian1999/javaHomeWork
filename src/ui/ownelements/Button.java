@@ -5,6 +5,9 @@ import java.awt.Font;
 import javax.swing.JButton;
 
 public class Button extends JButton{
+    /**
+     * My own customised button.
+     */
     private static final String FONT_NAME = "Vonique 64";
     public Button(int width, int height, String text, int fontSize) {
         this.setText(text);

@@ -11,6 +11,9 @@ import logics.*;
 public class AppTest {
     private static final double delta = 1e-5;
 
+    /**
+     * Check wheter the date is in correct YYYY-MM-DD format
+     */
     @Test
     public void dateCorrectness(){
         String testStringOne = "2023-10-10";
@@ -23,6 +26,9 @@ public class AppTest {
         assertNull(App.checkDate(testStringFour));
     }
 
+    /**
+     * Check if the breaktime counter gives a correct output
+     */
     @Test
     public void testBreakTimeCounter(){
         boolean isVem = false;
@@ -42,6 +48,9 @@ public class AppTest {
         assertEquals(l.breakTime(10), 1, delta);
     }
 
+    /**
+     * Checks if the hourcounting works as expected.
+     */
     @Test
     public void testCountingHours(){
         boolean isDoubleMoney = false;
@@ -67,7 +76,9 @@ public class AppTest {
         
         assertEquals(hours.getBaseHours(), 11, delta);
     }
-
+    /**
+     * Checks if the money calculating is working as expected.
+     */
     @Test
     public void testCalculateMoney() {
         Money money = new Money();
@@ -83,6 +94,9 @@ public class AppTest {
         assertEquals(money.getTbMoney(), 3574.2, delta);
     }
 
+    /**
+     * Checks if the hour given in string converts perfectly to double
+     */
     @Test
     public void testConvertToDouble() {
         double result = Clocking.convertToDouble("14:20");
@@ -95,13 +109,18 @@ public class AppTest {
         assertEquals(result, 22.75, delta);
     }
 
+    /*
+     * test if the adding hours to each other is working fine.
+     */
     @Test
     public void testAddingHours() {
         Hours hours = new Hours(8, 0, 0, 0);
         assertEquals(hours.add(new Hours(8, 0, 0, 0)).getBaseHours(), 16, delta);
         assertEquals(hours.add(new Hours(4, 4, 0, 0)).getThirtyPercent(), 4, delta);
     }
-
+    /**
+     * Check if the user data gets writen as it supposed to be
+     */
     @Test
     public void checkUserWrite() {
         User user = new User(23, 2390, 8, false, true, "Adrian", "Koordinátor", "Állandós");
@@ -111,7 +130,9 @@ public class AppTest {
         assertEquals(newUser.getName(), user.getName());
         assertNotEquals(newUser.getApplicationType(), "Diák");
     }
-
+    /**
+     * Check if the money data gets writen as it supposed to be
+     */
     @Test
     public void testMoneyWrite() {
         Money money = new Money();
@@ -121,6 +142,9 @@ public class AppTest {
         assertNotNull(newMoney);
     }
 
+    /**
+     * Checks if the engines' adding method returns the expected value
+     */
     @Test
     public void testEngineDayAdded() {
         Engine engine = new Engine();
@@ -132,6 +156,9 @@ public class AppTest {
         assertNotEquals(engine.isDayAdded(LocalDate.of(2023, 10, 22)), true);
     }
 
+    /**
+     * Checks if the users data gets converted corretctly.
+     */
     @Test
     public void testUserParsing(){
         String age = "18";

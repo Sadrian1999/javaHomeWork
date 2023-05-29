@@ -2,22 +2,6 @@
 //*                                     MONEY CLASS                                          *
 //********************************************************************************************
 
-/**
- * This class calculates the salary of given parameters in the other logics classes, 
- * @param base      base hours from clocking
- * @param thirty    is the 30% bonus
- * @param fourty    is the 40% bonus
- * @param hundred   is the 100% bonus
- * @param sick      is the hours of being sick
- * @param paidOff   is the hours being on holiday
- * @param overTime  is the hours working more in a month then the montly frame
- * @param nett      is the nett salary
- * @param gross     is the gross salary
- * 
- * @function calculate takes the users data, and calculate their salary
- *              
- */
-
 package logics;
 
 import java.io.*;
@@ -42,6 +26,20 @@ public class Money implements Serializable{
     private double overTimeMoney;
     private double tbMoney;
     
+    /**
+     * @param base      base hours from clocking
+     * @param thirty    is the 30% bonus
+     * @param fourty    is the 40% bonus
+     * @param hundred   is the 100% bonus
+     * @param sick      is the hours of being sick
+     * @param paidOff   is the hours being on holiday
+     * @param overTime  is the hours working more in a month then the montly frame
+     * @param nett      is the nett salary
+     * @param gross     is the gross salary
+     */
+    public Money() {
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -141,6 +139,9 @@ public class Money implements Serializable{
     public double getTbMoney() {
         return tbMoney;
     }
+    /**
+     * calculate takes the users data, and calculate their salary
+     */
     public void calculate() {
         double taxMoney;
         baseMoney = user.getWage() * base;

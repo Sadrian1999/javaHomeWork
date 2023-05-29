@@ -15,7 +15,9 @@ public class Menubar extends JPanel{
     private static final Dimension MENU_SIZE = new Dimension(MENU_BAR_WIDTH, MAIN_HEIGHT);
     private static final Color MENU_BAR_COLOR = new Color(0x635985);
     private static final Border RIGHT_BORDER = BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK);
-    
+    /**
+     * Small class for some basic settings for the menu bar panel.
+     */
     public Menubar() {
         panelSettings();
     }

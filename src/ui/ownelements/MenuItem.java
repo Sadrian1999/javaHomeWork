@@ -17,7 +17,11 @@ public class MenuItem extends JLabel implements MouseListener{
     private static final Color MENU_BAR_COLOR = new Color(0x635985);
     private static final Color MENU_HOVER_COLOR = new Color(0xE384FF);
     private static final String FONT_NAME = "Vonique 64";
-
+    /**
+     * My menu label for havin an icon and a text next to it in the menu bar.
+     * @param path the path of the label icon
+     * @param text the text of the label
+     */
     public MenuItem(String path, String text) {
         this.setIcon(new ImageIcon(path));
         this.setText(text);

@@ -77,7 +77,9 @@ public class App extends JFrame implements MouseListener{
 //********************************************************************************************
 //*                                       RUNNING                                            *
 //********************************************************************************************
-    
+    /**
+     * Runs the app, loads everything needed and shows the wlcome page.
+     */
     public App(){
         menuSettings();
         panelSettings();
@@ -175,15 +177,20 @@ public class App extends JFrame implements MouseListener{
 //********************************************************************************************
 
     private String previousPanel;
-
+    /**
+     * Creating the menubar, adding the menu items to it
+     */
     private void menuSettings(){
         menu.add(newCount);
         menu.add(prevCount);
         menu.add(settings);
         menu.add(profile);
         containter.add(menu, BorderLayout.WEST);
-
     }
+    /**
+     * Settings for all the panels, the nadding them to the main content panel, then adding to the main frame of the app.
+     * Then adding the mouselisteners for the clicks on the menubar.
+     */
     private void panelSettings(){
         contentPanels.setSize(CONTENT_SIZE);
 
@@ -207,7 +214,9 @@ public class App extends JFrame implements MouseListener{
         profile.addMouseListener(this);
         settings.addMouseListener(this);
     }  
-
+    /**
+     * Creating a newcountpanel
+     */
     private void newCountPanelSettings(){
         Label dateLabel = new Label("Dátum");
         Label clockInLabel = new Label("Be");
@@ -226,6 +235,9 @@ public class App extends JFrame implements MouseListener{
         newCountPanel.add(thirdColumn);
         newCountPanel.add(fourthColumn);
     }
+    /**
+     * Creating a reportpanel
+     */
     private void reportPanelSettings(){
         JComponent[] firstElements = new JComponent[] {
             new Label("Pótlék"), new Label("Alap"), new Label("30%"), new Label("40%"), 
@@ -249,6 +261,9 @@ public class App extends JFrame implements MouseListener{
         reportPanel.add(secondColumn);
         reportPanel.add(thirdColumn);
     }
+    /**
+     * Creating a pervious count panel
+     */
     private void prevCountPanelSettings(){
         Column firstColumn = new Column();
         File f = new File(System.getProperty("user.dir"));
@@ -294,6 +309,9 @@ public class App extends JFrame implements MouseListener{
         });
         prevCountPanel.add(firstColumn);
     }
+    /**
+     * Creating the settingspanel
+     */
     private void settingsPanelSettings() {
         Column firstColumn = new Column(new JComponent[]{
             nameLabel, ageLabel, wageLabel, positionlLabel, appliacationTypeLabel, jobTimeLabel, isTaxFreLabel, isVemlLabel
@@ -305,6 +323,9 @@ public class App extends JFrame implements MouseListener{
         settingsPanel.add(firstColumn);
         settingsPanel.add(secondColumn);
     }
+    /**
+     * Creating the profilepanel
+     */
     private void profilePanelSettings(){
         String userProfilePath = engine.getMoney().getUser().getProfilePicturePath();
         String userName = engine.getMoney().getUser().getName();
@@ -322,6 +343,9 @@ public class App extends JFrame implements MouseListener{
         profilePanel.add(firstColumn);
         profilePanel.add(secondColumn);
     }
+    /**
+     * Cretating the welcomepanel
+     */
     private void welcomePanelSettings(){
         String message = "<html>";
         message += "<h1>Üdvözöllek a pénzszámoló programban!</h1>";
@@ -339,8 +363,11 @@ public class App extends JFrame implements MouseListener{
         welcomePanel.setLayout(new BorderLayout());
         welcomePanel.add(welcomeMessage, BorderLayout.NORTH);
     }
-
+    /**
+     * lastly, setting some basic stuff for the main frame
+     */
     private void appSettings() {
+        this.setResizable(false);
         this.setSize(BASE_SIZE);
         this.setTitle(TITLE);
         this.getContentPane().setBackground(BASE_BG_COLOR);
@@ -352,14 +379,14 @@ public class App extends JFrame implements MouseListener{
     }
 
 
-/** 
- * Deals with the possible error types that can happen during creating a new count.
- * @return ArrayList<Object>
- */
-//********************************************************************************************
-//*                                     ERROR HANDLING                                       *
-//********************************************************************************************
-
+    //********************************************************************************************
+    //*                                     ERROR HANDLING                                       *
+    //********************************************************************************************
+    
+    /** 
+     * Deals with the possible error types that can happen during creating a new count.
+     * @return ArrayList<Object>
+     */
     public ArrayList<Object> newCountErrors(){
         LocalDate date;
         ArrayList<Object> datas = new ArrayList<>();
@@ -465,7 +492,9 @@ public class App extends JFrame implements MouseListener{
 //********************************************************************************************
 //*                                     EVENT SECTION                                        *
 //********************************************************************************************
-
+    /**
+     * Deals with all the button actions in the app.
+     */
     public void buttonActions(){
         File file = new File(System.getProperty("user.dir"));
         File[] files = file.listFiles();

@@ -2,16 +2,6 @@
 //*                                     CLOCKING CLASS                                       *
 //********************************************************************************************
 
-/**
- * The Clocking class represents the time you clocked in, clocked out and the time you spent
- * working.
- * @input: A string for in, and one for out
- * @example 14:00 - 22:00, where 14:00 is the in and 22:00 is the out
- * 
- * @function convertToDouble takes a string and converst it to a double
- * @example 18:30 -> 18,5
- * 
- */
 
 package logics;
 
@@ -21,6 +11,14 @@ public class Clocking {
     private String originalIn;
     private String originalOut;
 
+    /**
+     * The Clocking class represents the time you clocked in, clocked out and the time you spent
+     * working.
+     * @param in string for clock in
+     * @param out string for clock out
+     * @example 14:00 - 22:00, where 14:00 is the in and 22:00 is the out
+     * 
+     */
     public Clocking(String in, String out){
         originalIn = in;
         originalOut = out;
@@ -38,7 +36,12 @@ public class Clocking {
     public String getOriginalOut() {
         return originalOut;
     }
-
+    /**
+     * Takes a date string and convert to a double
+     * @example 18:30 -> 18,5
+     * @param clocking is the date string
+     * @return the double value
+     */
     public static double convertToDouble(String clocking){
         String[] time = clocking.split(":");
         int hour = Integer.parseInt(time[0]);
