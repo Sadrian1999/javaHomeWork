@@ -6,11 +6,11 @@ import engine.Engine;
 import logics.*;
 import ui.Errors.ClockingConvertException;
 import ui.mainpanels.*;
+import ui.ownelements.Button;
 import ui.ownelements.Label;
-import ui.ownelements.TextField;
 import ui.ownelements.MenuItem;
 import ui.ownelements.Menubar;
-import ui.ownelements.Button;
+import ui.ownelements.TextField;
 
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -351,6 +351,11 @@ public class App extends JFrame implements MouseListener{
         this.add(containter);
     }
 
+
+/** 
+ * Deals with the possible error types that can happen during creating a new count.
+ * @return ArrayList<Object>
+ */
 //********************************************************************************************
 //*                                     ERROR HANDLING                                       *
 //********************************************************************************************
@@ -380,6 +385,12 @@ public class App extends JFrame implements MouseListener{
             return errors;
         }
     }
+    
+    /** 
+     * Checks whether the given date in string is in the correct format.
+     * @param dateString
+     * @return LocalDate
+     */
     public static LocalDate checkDate(String dateString){
         try {
             return LocalDate.parse(dateString);
@@ -388,6 +399,16 @@ public class App extends JFrame implements MouseListener{
             return null;
         }
     }
+    
+    /** 
+     * Check whether a clocking is given correctly.
+     * @param clockInString
+     * @param clockOutString 
+     * @param sickString
+     * @param paidOffString
+     * @param datas if no error, this gives the given datas
+     * @param errors if the is an error, it gives back the type
+     */
     public static void checkClocking(String clockInString, String clockOutString, String sickString, String paidOffString, ArrayList<Object> datas, ArrayList<Object> errors){
         int inLength = clockInString.length();
         int outLength = clockOutString.length();
@@ -420,6 +441,25 @@ public class App extends JFrame implements MouseListener{
         }
         catch (StringIndexOutOfBoundsException e) {
             errors.add("Sikertelen számkonvertálás!");
+        }
+    }
+
+    
+    /** 
+     * Check whether the users' data is in correct form
+     * @param age
+     * @param wage
+     * @param job
+     * @return boolean
+     */
+    public static boolean checkUserParsing(String age, String wage, String job){
+        try {
+            Integer.parseInt(age);
+            Integer.parseInt(wage);
+            Integer.parseInt(job);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 //********************************************************************************************
@@ -541,17 +581,25 @@ public class App extends JFrame implements MouseListener{
         
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                int age = Integer.parseInt(ageTextField.getText());
-                int wage = Integer.parseInt(wagTextField.getText());
-                int jobTime = Integer.parseInt(jobTimetTextField.getText());
-                boolean isVem = isVemtCheckBox.isSelected();
-                boolean isTaxFree = isTaxFreeCheckBox.isSelected();
-                String name = nameTextField.getText();
-                String position = posTextField.getText();
-                String applicationType = applicationTextField.getText();
-                User user = new User(age, wage, jobTime, isVem, isTaxFree, name, position, applicationType);
-                engine.getMoney().setUser(user);
-                user.write();
+                int age;
+                int wage;
+                int jobTime;
+                if (checkUserParsing(ageTextField.getText(), wagTextField.getText(), jobTimetTextField.getText())) {
+                    age = Integer.parseInt(ageTextField.getText());
+                    wage = Integer.parseInt(wagTextField.getText());
+                    jobTime = Integer.parseInt(jobTimetTextField.getText());
+                    boolean isVem = isVemtCheckBox.isSelected();
+                    boolean isTaxFree = isTaxFreeCheckBox.isSelected();
+                    String name = nameTextField.getText();
+                    String position = posTextField.getText();
+                    String applicationType = applicationTextField.getText();
+                    User user = new User(age, wage, jobTime, isVem, isTaxFree, name, position, applicationType);
+                    engine.getMoney().setUser(user);
+                    user.write();
+                }
+                else {
+                    nameTextField.setText("Hiba, próbáld újra!");
+                }
             }
         });
     }

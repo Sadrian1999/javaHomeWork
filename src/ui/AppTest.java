@@ -3,12 +3,14 @@ package ui;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-
 import org.junit.*;
+
+import engine.Engine;
 import logics.*;
 
 public class AppTest {
     private static final double delta = 1e-5;
+
     @Test
     public void dateCorrectness(){
         String testStringOne = "2023-10-10";
@@ -94,7 +96,48 @@ public class AppTest {
     }
 
     @Test
-    public void name() {
-        
+    public void testAddingHours() {
+        Hours hours = new Hours(8, 0, 0, 0);
+        assertEquals(hours.add(new Hours(8, 0, 0, 0)).getBaseHours(), 16, delta);
+        assertEquals(hours.add(new Hours(4, 4, 0, 0)).getThirtyPercent(), 4, delta);
+    }
+
+    @Test
+    public void checkUserWrite() {
+        User user = new User(23, 2390, 8, false, true, "Adrian", "Koordinátor", "Állandós");
+        user.write();
+        User newUser = User.read();
+        assertEquals(newUser.getAge(), user.getAge());
+        assertEquals(newUser.getName(), user.getName());
+        assertNotEquals(newUser.getApplicationType(), "Diák");
+    }
+
+    @Test
+    public void testMoneyWrite() {
+        Money money = new Money();
+        money.write("test.ser");
+        Money newMoney = Money.read("test.ser");
+        assertEquals(money.getBase(), newMoney.getBase(), delta);
+        assertNotNull(newMoney);
+    }
+
+    @Test
+    public void testEngineDayAdded() {
+        Engine engine = new Engine();
+        engine.addDay(new Day(new Clocking("14:00", "22:00"), false),LocalDate.of(2023, 10, 20));
+        engine.addDay(new Day(new Clocking("14:00", "22:00"), false),LocalDate.of(2023, 11, 20));
+        assertEquals(engine.isDayAdded(LocalDate.of(2023, 10, 20)), true);
+        assertEquals(engine.isDayAdded(LocalDate.of(2023, 11, 20)), true);
+        assertEquals(engine.isDayAdded(LocalDate.of(2023, 12, 20)), false);
+        assertNotEquals(engine.isDayAdded(LocalDate.of(2023, 10, 22)), true);
+    }
+
+    @Test
+    public void testUserParsing(){
+        String age = "18";
+        String wage = "2390";
+        String job = "8";
+        boolean parseSuccesful = App.checkUserParsing(age, wage, job);
+        assertTrue(parseSuccesful);
     }
 }

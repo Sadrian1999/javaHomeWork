@@ -28,6 +28,7 @@ package engine;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import logics.*;
 
 public class Engine {
@@ -45,7 +46,7 @@ public class Engine {
         return days;
     }
     
-    private boolean isDayAdded(LocalDate date){
+    public boolean isDayAdded(LocalDate date){
         if (days.containsKey(date)) {
             return true;
         }
